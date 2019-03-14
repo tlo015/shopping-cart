@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>USAePay Checkout Cart</title>
+    <script>
+        var authKey = '<%= authKey %>'
+    </script>
+    <script src="connect.js" language="javascript"></script>
+</head>
+<body>
+    <!-- create a product 
+    create add to cart button 
+    create a cart 
+    adjust quantity of products 
+    total price  -->
+    <div class="container">
+        <!-- PRODUCTS GO HERE -->
+        <div class="products">
+            <% items.merch.forEach(function(item) { %>
+                <div class="product-item"data-item-id="<%= item.id %>">
+                    <span class="product-title"> <%= item.name %> </span>
+                    <div class="product-details">
+                        <span class="product-price">$ <%= item.price / 100 %> </span>
+                        <button class="btn btn-primary product-btn" type="button">Add to Cart</button>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
+
+        <!-- SHOPPING CART -->
+        <div class="cart">
+            <div class="cart-header">
+                <h4>CART</h4>
+                <!-- <div class="cart-row">
+                    <span class="cart-item">ITEM</span>
+                    <span class="cart-price">PRICE</span>
+                    <span class="cart-quantity">QUANTITY</span>
+                </div> -->
+                <div class="in-cart">
+                    <!-- test item in cart  -->
+                    <!-- <div class="cart-row"> 
+                        <div class="cart-item">
+                            <span class="cart-item-title">Item1</span>
+                        </div>
+                        <span class="cart-price">$9.99</span>
+                        <div class="cart-quantity">
+                            <input class="change-cart-quantity" type="number" value="1">
+                            <button class="btn btn-danger remove-btn">Remove</button>
+                        </div> 
+                    </div> -->
+                    <!-- test item in cart -->
+                    <!-- <div class="cart-row">
+                        <div class="cart-item">
+                            <span class="cart-item-title">Item2</span>
+                        </div>
+                        <span class="cart-price">$14.99</span>
+                        <div class="cart-quantity">
+                            <input class="change-cart-quantity" type="number" value="2">
+                            <button class="btn btn-danger remove-btn">Remove</button>
+                        </div>
+                    </div> -->
+                </div>
+                <div class="cart-total">
+                    <h6 class="total">TOTAL</h6>
+                    <span class="total-price" name="UMamount">$0</span>
+                </div>
+                <input type="button" class="btn-purchase" name="purchase" value="Purchase">
+                <!-- <button class="btn btn-primary btn-purchase">PURCHASE</button> -->
+            </div>
+        </div>
+
+        <!-- CREDIT CARD CHECKOUT -->
+        <div id="ccContainer">
+            <h1>My Website Checkout Page</h1>
+
+            <form name="ccform" action="https://www.usaepay.com/gate.php" method="post" onSubmit="return validateForm()">
+            <input type="hidden" name="UMkey" value= "_16Ydj0WDSbQB6xc9422Yju53HTS314x">
+            <input type="hidden" name="UMredir" value="http://localhost:3000/charge">
+
+            <h3 for="paymentCardContainer">Credit/Debit Card</h3>
+            <div id="paymentCardContainer">
+                <!-- PaymentCard iFrame content will go here. -->
+                Card Number: <input type="text" name="UMcard" size="12">
+                Expiry Date: <input type="text" name="UMexpirM" size="2" maxlength="2" placeholder="MM">/
+                <input type="text" name="UMexpirY" size="2" maxlength="2" placeholder="YY">
+                <input type="hidden" name="UMexpir" value="">
+            </div>
+
+            <!-- Other Form Data -->
+            <h3> Billing Information </h3>
+            Full Name: <input type="text" name="UMname"><br>
+            Street: <input type="text" name="UMstreet"><br>
+            City: <input type="text" name="UMcity"><br>
+            State: <input type="text" name="UMstate" size="2" maxlength="2"><br>
+            Zip: <input type="text" name="UMzip" size="5" maxlength="5"><br>
+        
+
+            <input type="submit" name="submit" value="Submit">
+
+        </form>
+    </div>
+
+    <script src="https://www.usaepay.com/js/v1/pay.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>

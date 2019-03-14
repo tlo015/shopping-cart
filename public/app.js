@@ -1,3 +1,7 @@
+console.log('app.js');
+
+//show payment div on click 
+
 //variables for click event listener to:
 //add item to cart
 var addToCartBtn = document.getElementsByClassName('product-btn');
@@ -29,16 +33,18 @@ function addToCartBtnClick(event) {
     var productItem = button.parentElement.parentElement;
     var title = productItem.getElementsByClassName('product-title')[0].innerText;
     var price = productItem.getElementsByClassName('product-price')[0].innerText;
-        console.log('add to cart', title, price);
+    var id = productItem.dataset.itemId;
+        console.log('add to cart', title, price, id);
     addItemToCart(title, price);
     //update price once the item has been added to the cart 
     updateCartTotal();
 }
 
 //create a div in the cart to display the added product
-function addItemToCart(title, price) {
+function addItemToCart(title, price, id) {
     var cartRow = document.createElement('div');
     cartRow.classList.add('cart-row');
+    cartRow.dataset.itemId = id;
     var cartItems = document.getElementsByClassName('in-cart')[0];
     //check to see if the item is already in the cart 
     //loop through all of the item names 
@@ -83,9 +89,27 @@ function removeFromCartBtn(event) {
     updateCartTotal();
 };
 
+// Post the information needed to purchase - 
+// send it to API and return an unique ID with the information - 
+// ID is stored and sent ID to local server - 
+// use API to process charges linked to Id
+
+
 function purchaseClicked() {
-    var total = document.getElementsByClassName('total-price')[0].innerText;
-    alert(`Do you want to checkout? Your total is ${total}`);
+    // var total = document.getElementsByClassName('total-price')[0].innerText;
+    var priceEl = document.getElementsByClassName('total-price')[0];
+    var price = parseFloat(priceEl.innerText.replace('$', ''));
+    console.log(price)
+
+    if (price == 0) {
+        alert ('Your cart is empty \nAdd an item to checkout');
+    } else {
+        alert (`Do you want to checkout? Your total is $${price}`);
+    };
+
+    // api.open({
+    //     amount: price,
+    // })
 }
 
 //update cart total
